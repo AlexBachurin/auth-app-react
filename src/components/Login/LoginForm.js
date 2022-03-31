@@ -6,11 +6,15 @@ import { useForm, Controller } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup';
 import validationSchema from './validation';
 import { useGlobalContext } from '../../contexts/AppContext';
+import { useAuthContext } from '../../contexts/AuthContext';
+import { useNavigate } from 'react-router-dom';
 import api from '../../services/index'
 const LoginForm = () => {
-    const { handleLoginShow } = useGlobalContext();
+    const { handleLoginShow, closeModal } = useGlobalContext();
     const [isLoading, setIsLoading] = useState(false);
-
+    const { contextValues } = useAuthContext();
+    let navigate = useNavigate();
+    // console.log(contextValues);
     // USEFORM
     const {
         control,
@@ -28,13 +32,16 @@ const LoginForm = () => {
             const { data: loginData } = await api.auth.login(data);
             console.log('form', data);
             console.log('api-response', loginData)
-            //токен возвращается токен авторизации
-            // auth.setToken(loginData.token);
-            //и данные о залогиненном юзере
-            // auth.setUser(loginData.user);
+            // токен возвращается токен авторизации
+            contextValues.setToken(loginData.token);
+            // и данные о залогиненном юзере
+            contextValues.setUser(loginData.user);
+            //navigate to profile and close modal
+            navigate('/profile');
+            closeModal();
         } catch (e) {
             //если ошибка то обрабатываем ошибку с помощью хука use-form
-            if (e.response.status === 422) {
+            if (e.response?.status === 422) {
                 Object.keys(e.response.data.errors).forEach((key) => {
                     setError(key, {
                         type: "manual",

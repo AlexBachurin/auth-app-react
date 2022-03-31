@@ -4,10 +4,12 @@ import Tab from '@mui/material/Tab';
 import Button from '@mui/material/Button';
 import styled from 'styled-components'
 import { useGlobalContext } from '../contexts/AppContext';
-
+import { useAuthContext } from '../contexts/AuthContext';
+import { Link } from 'react-router-dom';
 
 const NavBar = () => {
     const { openModal } = useGlobalContext();
+    const { contextValues } = useAuthContext();
     const [value, setValue] = React.useState(0);
 
     const handleChange = (event, newValue) => {
@@ -25,14 +27,29 @@ const NavBar = () => {
                     <Tab label="Page One" />
                     <Tab label="Page Two" />
                 </Tabs>
-                <Button sx={{
-                    marginLeft: '20px'
-                }}
-                    variant="contained"
-                    onClick={openModal}
-                >
-                    Login
-                </Button>
+                {contextValues.user ?
+                    <>
+                        <Button color="inherit" component={Link} to="/profile">
+                            {contextValues.user.firstName} {contextValues.user.lastName}
+                        </Button>
+                        <Button sx={{
+                            marginLeft: '20px'
+                        }}
+                            variant="contained"
+                            onClick={() => contextValues.logOut()}
+                        >
+                            Logout
+                        </Button>
+                    </>
+                    :
+                    <Button sx={{
+                        marginLeft: '20px'
+                    }}
+                        variant="contained"
+                        onClick={openModal}
+                    >
+                        Login
+                    </Button>}
             </div>
         </Wrapper>
     )

@@ -6,10 +6,16 @@ import { useForm, Controller } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup';
 import validationSchema from './validationSchema';
 import { useGlobalContext } from '../../contexts/AppContext';
+import { useAuthContext } from '../../contexts/AuthContext';
 import api from '../../services';
+import { useNavigate } from 'react-router-dom';
 const Registration = () => {
-    const { handleLoginShow } = useGlobalContext();
+    const { handleLoginShow, closeModal } = useGlobalContext();
+    const { contextValues } = useAuthContext();
     const [isLoading, setIsLoading] = useState(false);
+
+    let navigate = useNavigate();
+
     const {
         control,
         handleSubmit,
@@ -28,11 +34,14 @@ const Registration = () => {
             console.log('data', data);
             console.log('api-response', loginData)
             //токен возвращается токен авторизации
-            // auth.setToken(loginData.token);
+            contextValues.setToken(loginData.token);
             //и данные о залогиненном юзере
-            // auth.setUser(loginData.user);
+            contextValues.setUser(loginData.user);
+            //navigate to profile and close modal
+            navigate('/profile');
+            closeModal();
         } catch (e) {
-            if (e.response.status === 422) {
+            if (e.response?.status === 422) {
                 Object.keys(e.response.data.errors).forEach((key) => {
                     setError(key, {
                         type: "manual",
