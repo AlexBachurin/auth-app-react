@@ -27,7 +27,9 @@ const Registration = () => {
             const { data: loginData } = await api.auth.login(data);
             console.log('data', data);
             console.log('api-response', loginData)
+            //токен возвращается токен авторизации
             // auth.setToken(loginData.token);
+            //и данные о залогиненном юзере
             // auth.setUser(loginData.user);
         } catch (e) {
             if (e.response.status === 422) {
@@ -115,6 +117,7 @@ const Registration = () => {
                     variant="contained"
                     color="primary"
                     type="submit"
+                    disabled={isLoading}
                 >
                     Register
                 </Button>

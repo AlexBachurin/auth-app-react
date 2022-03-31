@@ -4,17 +4,7 @@ import Tab from '@mui/material/Tab';
 import Button from '@mui/material/Button';
 import styled from 'styled-components'
 import { useGlobalContext } from '../contexts/AppContext';
-function LinkTab(props) {
-    return (
-        <Tab
-            component="a"
-            onClick={(event) => {
-                event.preventDefault();
-            }}
-            {...props}
-        />
-    );
-}
+
 
 const NavBar = () => {
     const { openModal } = useGlobalContext();
@@ -32,17 +22,17 @@ const NavBar = () => {
                 <Tabs sx={{
                     // marginRight: '30px'
                 }} value={value} onChange={handleChange} aria-label="nav tabs example">
-                    <LinkTab label="Page One" href="/drafts" />
-                    <LinkTab label="Page Two" href="/trash" />
-                    <Button sx={{
-                        marginLeft: '20px'
-                    }}
-                        variant="contained"
-                        onClick={openModal}
-                    >
-                        Login
-                    </Button>
+                    <Tab label="Page One" />
+                    <Tab label="Page Two" />
                 </Tabs>
+                <Button sx={{
+                    marginLeft: '20px'
+                }}
+                    variant="contained"
+                    onClick={openModal}
+                >
+                    Login
+                </Button>
             </div>
         </Wrapper>
     )
@@ -51,6 +41,9 @@ const NavBar = () => {
 const Wrapper = styled.nav`
         display: flex;
         justify-content: space-between;
+        .tabs-container {
+            display: flex;
+        }
         .logo-container {
             height: 48px;
             img {

@@ -88,7 +88,7 @@ const LoginForm = () => {
                     variant="contained"
                     color="primary"
                     type="submit"
-                // disabled={isLoading}
+                    disabled={isLoading}
                 >
                     Login
                 </Button>
