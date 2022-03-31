@@ -26,7 +26,7 @@ const NavBar = () => {
     return (
         <Wrapper className='center'>
             <div className="logo-container">
-                <img src="" alt="" />
+                <img src="https://res.cloudinary.com/dljezd6qv/image/upload/v1619820552/main-logo.png" alt="logo" />
             </div>
             <div className="tabs-container">
                 <Tabs sx={{
@@ -51,6 +51,15 @@ const NavBar = () => {
 const Wrapper = styled.nav`
         display: flex;
         justify-content: space-between;
+        .logo-container {
+            height: 48px;
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+        }
+        
         
 `
 
