@@ -1,13 +1,17 @@
 import styled from 'styled-components'
-import React from 'react'
+import React, { useState } from 'react'
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField';
 import { useForm, Controller } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup';
 import validationSchema from './validation';
 import { useGlobalContext } from '../../contexts/AppContext';
+import api from '../../services/index'
 const LoginForm = () => {
     const { handleLoginShow } = useGlobalContext();
+    const [isLoading, setIsLoading] = useState(false);
+
+    // USEFORM
     const {
         control,
         handleSubmit,
@@ -16,8 +20,34 @@ const LoginForm = () => {
     } = useForm({
         resolver: yupResolver(validationSchema),
     });
+
+    //SUBMIT 
+    const onSubmit = async (data) => {
+        try {
+            setIsLoading(true);
+            const { data: loginData } = await api.auth.login(data);
+            console.log('form', data);
+            console.log('api-response', loginData)
+            //токен возвращается токен авторизации
+            // auth.setToken(loginData.token);
+            //и данные о залогиненном юзере
+            // auth.setUser(loginData.user);
+        } catch (e) {
+            //если ошибка то обрабатываем ошибку с помощью хука use-form
+            if (e.response.status === 422) {
+                Object.keys(e.response.data.errors).forEach((key) => {
+                    setError(key, {
+                        type: "manual",
+                        message: e.response.data.errors[key],
+                    });
+                });
+            }
+        } finally {
+            setIsLoading(false);
+        }
+    };
     return (
-        <FormWrapper>
+        <FormWrapper onSubmit={handleSubmit(onSubmit)}>
             <Controller
                 name="email"
                 control={control}
