@@ -26,7 +26,7 @@ const ModalLogin = () => {
             aria-describedby="modal-modal-description"
         >
             <Box sx={style}>
-                {showRegister ? <LoginForm /> : <Registration />}
+                {showRegister ? <Registration /> : <LoginForm />}
             </Box>
         </Modal>
     )

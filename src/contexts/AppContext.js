@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 
 const AppContext = React.createContext();
 
@@ -17,6 +17,11 @@ const AppProvider = ({ children }) => {
     const handleLoginShow = () => {
         setShowRegister(!showRegister)
     }
+
+    //every time we open/close modal reset showRegiser so we show Login page on next modal open
+    useEffect(() => {
+        setShowRegister(false);
+    }, [isModalOpen])
     return <AppContext.Provider value={{
         isModalOpen,
         openModal,
