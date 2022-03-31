@@ -7,6 +7,7 @@ import { Route, Routes } from 'react-router-dom';
 import HomePage from './Pages/HomePage';
 import Profile from './Pages/Profile';
 import RequireAuth from './Routes/RequireAuth';
+import ForgotPasswordModal from './components/Login/ForgotPasswordModal';
 function App() {
   return (
     <main>
@@ -24,6 +25,7 @@ function App() {
 
       </Routes>
       <ModalLogin />
+      <ForgotPasswordModal />
     </main>
   );
 }

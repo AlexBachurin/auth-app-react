@@ -4,6 +4,9 @@ const AppContext = React.createContext();
 
 
 const AppProvider = ({ children }) => {
+    const [isForgotPassword, setIsForgotPassword] = React.useState(false);
+
+
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [showRegister, setShowRegister] = useState(false);
     const openModal = () => {
@@ -18,6 +21,14 @@ const AppProvider = ({ children }) => {
         setShowRegister(!showRegister)
     }
 
+    const handleOpenPassForgot = () => {
+        setIsForgotPassword(true)
+        setIsModalOpen(false);
+    };
+    const handleClosePassForgot = () => {
+        setIsForgotPassword(false);
+    }
+
     //every time we open/close modal reset showRegiser so we show Login page on next modal open
     useEffect(() => {
         setShowRegister(false);
@@ -27,7 +38,10 @@ const AppProvider = ({ children }) => {
         openModal,
         closeModal,
         showRegister,
-        handleLoginShow
+        handleLoginShow,
+        isForgotPassword,
+        handleClosePassForgot,
+        handleOpenPassForgot
     }}>
         {children}
     </AppContext.Provider>

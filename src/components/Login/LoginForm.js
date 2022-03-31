@@ -2,6 +2,7 @@ import styled from 'styled-components'
 import React, { useState } from 'react'
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField';
+
 import { useForm, Controller } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup';
 import validationSchema from './validation';
@@ -10,7 +11,7 @@ import { useAuthContext } from '../../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import api from '../../services/index'
 const LoginForm = () => {
-    const { handleLoginShow, closeModal } = useGlobalContext();
+    const { handleLoginShow, closeModal, handleOpenPassForgot } = useGlobalContext();
     const [isLoading, setIsLoading] = useState(false);
     const { contextValues } = useAuthContext();
     let navigate = useNavigate();
@@ -107,7 +108,18 @@ const LoginForm = () => {
                     Create an account
                 </Button>
             </div>
+            <div className="forgot">
+                <Button
+                    color="inherit"
+                    type="Button"
+                    onClick={handleOpenPassForgot}
+                >
+                    forgot password?
+                </Button>
+
+            </div>
         </FormWrapper>
+
     )
 }
 
@@ -119,6 +131,10 @@ const FormWrapper = styled.form`
         margin-top: 20px;
         display: flex;
         justify-content: space-between;
+    }
+    .forgot {
+        text-align: center;
+        margin-top: 10px;
     }
 `
 export default LoginForm

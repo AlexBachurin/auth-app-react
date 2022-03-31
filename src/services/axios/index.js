@@ -6,7 +6,7 @@ const axiosInstance = axios.create({
     baseURL: "http://nestjs-boilerplate-test.herokuapp.com/api",
 });
 
-//перехватчик для добавления тока авторизации в хеадер если он есть в cookie
+//перехватчик для добавления токена авторизации в хеадер если он есть в cookie
 axiosInstance.interceptors.request.use(
     (config) => {
         const authToken = Cookies.get("auth-token");
